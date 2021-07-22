@@ -1,6 +1,6 @@
 {
 	"name": "qfpay-signature-middleware",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "qfpay signature validate middleware",
 	"main": "index.js",
 	"author": "michael34435@capslock.tw",
