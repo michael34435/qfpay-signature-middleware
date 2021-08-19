@@ -8,7 +8,7 @@ module.exports = (clientKey) => (ctx, ...args) => {
   const key = clientKey?.[payType] ?? clientKey;
 
   // check signature
-  const against = crypto.createHash('md5').update(JSON.stringify(body) + key).digest('hex').toUpperCase();
+  const against = crypto.createHash('md5').update(JSON.stringify(body, null, ' ').replace(/,\n\s/gi, ', ').replace(/\n\s*/gi, '') + key).digest('hex').toUpperCase();
 
   if (signature !== against) {
     throw new QFPaySignatureError();
