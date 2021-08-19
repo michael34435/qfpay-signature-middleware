@@ -1,5 +1,5 @@
-const crypto = require('crypto');
 const { QFPaySignatureError } = require('./error');
+const { hash } = require('./helpers');
 
 module.exports = (clientKey) => (ctx, ...args) => {
   const signature = ctx?.request?.headers?.['x-qf-sign'] ?? ctx?.headers?.['x-qf-sign'] ?? '';
@@ -8,7 +8,7 @@ module.exports = (clientKey) => (ctx, ...args) => {
   const key = clientKey?.[payType] ?? clientKey;
 
   // check signature
-  const against = crypto.createHash('md5').update(JSON.stringify(body, null, ' ').replace(/,\n\s/gi, ', ').replace(/\n\s*/gi, '') + key).digest('hex').toUpperCase();
+  const against = hash(key, body);
 
   if (signature !== against) {
     throw new QFPaySignatureError();
